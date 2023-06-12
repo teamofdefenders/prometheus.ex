@@ -33,7 +33,7 @@ defmodule PrometheusEx.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :mnesia, :prometheus]]
+    [applications: [:logger, :prometheus]]
   end
 
   defp description do
