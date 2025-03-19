@@ -1,5 +1,5 @@
 defmodule Prometheus.Injector do
-  @moduledoc false
+  @moduledoc ""
 
   def inject(callback, env, ast) do
     ast
