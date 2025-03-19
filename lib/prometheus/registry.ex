@@ -23,7 +23,7 @@ defmodule Prometheus.Registry do
   @doc """
   Calls `callback` for each collector with two arguments: `registry` and `collector`.
   """
-  delegate collect(callback, registry \\ :default)
+  delegate collect(registry \\ :default, callback)
 
   @doc """
   Returns collectors registered in `registry`.

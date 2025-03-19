@@ -168,7 +168,7 @@ defmodule Prometheus.Metric.Counter do
         quote do
           require Prometheus.Error
 
-          value =  unquote(block)
+          value = unquote(block)
           Prometheus.Metric.Counter.inc(unquote(spec), 1)
           value
         end
