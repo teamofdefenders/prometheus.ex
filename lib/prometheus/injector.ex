@@ -1,4 +1,8 @@
 defmodule Prometheus.Injector do
+  @moduledoc """
+  Prometheus injector.
+  """
+
   def inject(callback, env, ast) do
     ast
     |> Macro.prewalk(fn thing ->
@@ -52,7 +56,7 @@ defmodule Prometheus.Injector do
 
   # implicit try
   def inject_([{:do, _do_block} | rest] = all, callback) do
-    if is_try_unwrapped(rest) do
+    if try_unwrapped?(rest) do
       callback.(
         quote do
           try unquote(all)
@@ -68,7 +72,7 @@ defmodule Prometheus.Injector do
     inject_([{:do, {:__block__, [], [thing]}}], callback)
   end
 
-  defp is_try_unwrapped(block) do
+  defp try_unwrapped?(block) do
     Keyword.has_key?(block, :catch) || Keyword.has_key?(block, :rescue) ||
       Keyword.has_key?(block, :after) || Keyword.has_key?(block, :else)
   end

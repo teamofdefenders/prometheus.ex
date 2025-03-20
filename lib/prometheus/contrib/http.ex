@@ -19,7 +19,7 @@ defmodule Prometheus.Contrib.HTTP do
   Returns class of the http status code:
 
       iex(7)> Prometheus.Contrib.HTTP.status_class(202)
-      'success'
+      ~c"success"
 
   Raises `Prometheus.InvalidValueError` exception if `code` is not a positive integer.
   """

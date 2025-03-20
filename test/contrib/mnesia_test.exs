@@ -5,7 +5,7 @@ defmodule Prometheus.Contrib.MnesiaTest do
 
   test "table disk size" do
     {:ok, root} = :file.get_cwd()
-    mnesia_dir = root ++ '/test/mnesia'
+    mnesia_dir = root ++ ~c"/test/mnesia"
     set_custom_mnesia_dir(mnesia_dir)
 
     assert mnesia_dir == :mnesia.system_info(:directory)

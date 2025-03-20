@@ -30,12 +30,12 @@ defmodule Prometheus.Contrib.HTTPTest do
   end
 
   test "status_class" do
-    assert 'unknown' == Prometheus.Contrib.HTTP.status_class(50)
-    assert 'informational' == Prometheus.Contrib.HTTP.status_class(150)
-    assert 'success' == Prometheus.Contrib.HTTP.status_class(250)
-    assert 'redirection' == Prometheus.Contrib.HTTP.status_class(350)
-    assert 'client-error' == Prometheus.Contrib.HTTP.status_class(450)
-    assert 'server-error' == Prometheus.Contrib.HTTP.status_class(550)
-    assert 'unknown' == Prometheus.Contrib.HTTP.status_class(650)
+    assert ~c"unknown" == Prometheus.Contrib.HTTP.status_class(50)
+    assert ~c"informational" == Prometheus.Contrib.HTTP.status_class(150)
+    assert ~c"success" == Prometheus.Contrib.HTTP.status_class(250)
+    assert ~c"redirection" == Prometheus.Contrib.HTTP.status_class(350)
+    assert ~c"client-error" == Prometheus.Contrib.HTTP.status_class(450)
+    assert ~c"server-error" == Prometheus.Contrib.HTTP.status_class(550)
+    assert ~c"unknown" == Prometheus.Contrib.HTTP.status_class(650)
   end
 end
