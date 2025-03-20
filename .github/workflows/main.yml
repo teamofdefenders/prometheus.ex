@@ -16,6 +16,10 @@ jobs:
       matrix:
         otp: ['27', '26', '25']
         elixir: ['1.18.3', '1.17.3', '1.16.3']
+        exclude:
+          # Unsupported
+          - elixir: '1.16.3'
+            otp: '27'
     runs-on: 'ubuntu-24.04'
     steps:
       - uses: actions/checkout@v4
