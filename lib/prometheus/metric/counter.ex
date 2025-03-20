@@ -127,6 +127,28 @@ defmodule Prometheus.Metric.Counter do
   defmacro count_exceptions(spec, exception \\ :_, body) do
     env = __CALLER__
 
+    rescue_body =
+      quote do
+        stacktrace = unquote(quote(do: __STACKTRACE__))
+
+        {registry, name, labels} = Prometheus.Metric.parse_spec(unquote(spec))
+        :prometheus_counter.inc(registry, name, labels, 1)
+        reraise(e, stacktrace)
+      end
+
+    rescue_block =
+      case exception do
+        :_ ->
+          quote do
+            e -> unquote(rescue_body)
+          end
+
+        exception ->
+          quote do
+            e in unquote(exception) -> unquote(rescue_body)
+          end
+      end
+
     Prometheus.Injector.inject(
       fn block ->
         quote do
@@ -136,12 +158,7 @@ defmodule Prometheus.Metric.Counter do
             try do
               unquote(block)
             rescue
-              e in unquote(exception) ->
-                stacktrace = unquote(quote(do: __STACKTRACE__))
-
-                {registry, name, labels} = Prometheus.Metric.parse_spec(unquote(spec))
-                :prometheus_counter.inc(registry, name, labels, 1)
-                reraise(e, stacktrace)
+              unquote(rescue_block)
             end
           )
         end
